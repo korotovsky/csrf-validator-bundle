@@ -12,6 +12,7 @@ use Krtv\Bundle\CsrfValidatorBundle\Annotations\Csrf;
 
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Annotations\Annotation;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfTokenManagerAdapter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -44,12 +45,15 @@ class AnnotationReaderManager
     protected $annotationClass = Csrf::class;
 
     /**
+     * Inject service container to avoid troubles with request object in acceptance tests
      * @param Reader $reader
      * @param $csrfManager
-     * @throws \RuntimeException
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(Reader $reader, $csrfManager)
+    public function __construct(Reader $reader, $csrfManager, ContainerInterface $container)
     {
+        $this->request = $container->get('request');
+
         $this->csrfManager = $csrfManager;
         $this->reader = $reader;
     }

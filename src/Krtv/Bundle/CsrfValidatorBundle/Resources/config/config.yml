@@ -5,10 +5,8 @@ parameters:
 services:
     krtv.csrf_validator.reader_manager:
         class: %krtv.csrf_validator.reader_manager.class%
-        arguments: [@annotation_reader, @form.csrf_provider]
+        arguments: [@annotation_reader, @form.csrf_provider, @service_container]
         scope: request
-        calls:
-            - [setRequest, [@request]]
 
     krtv.csrf_validator.subscriber:
         class: %krtv.csrf_validator.subscriber.class%
