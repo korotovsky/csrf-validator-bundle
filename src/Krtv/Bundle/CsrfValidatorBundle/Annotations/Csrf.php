@@ -23,4 +23,9 @@ final class Csrf extends Annotation
      * @var string Intention for CSRF token
      */
     public $intention;
+
+    /**
+     * @var string
+     */
+    public $param = 'token';
 }

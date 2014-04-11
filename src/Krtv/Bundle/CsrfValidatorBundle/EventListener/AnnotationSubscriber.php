@@ -9,7 +9,11 @@
 namespace Krtv\Bundle\CsrfValidatorBundle\EventListener;
 
 
+use Krtv\Bundle\CsrfValidatorBundle\ReaderManager\AnnotationReaderManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -18,6 +22,19 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class AnnotationSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var AnnotationReaderManager
+     */
+    protected $annotationManager;
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->annotationManager = $container->get('krtv.csrf_validator.reader_manager');
+    }
+
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *
@@ -46,11 +63,19 @@ class AnnotationSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param $event
-     * @return bool
+     * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      */
-    public function onKernelController($event)
+    public function onKernelController(FilterControllerEvent $event)
     {
-        return true;
+        list($controller, $action) = $event->getController();
+
+        $method = new \ReflectionMethod($controller, $action);
+
+        if ($annotation = $this->annotationManager->supports($method)) {
+            if (!$this->annotationManager->validate($annotation)) {
+                throw new BadRequestHttpException('Token is invalid');
+            }
+        }
     }
 }

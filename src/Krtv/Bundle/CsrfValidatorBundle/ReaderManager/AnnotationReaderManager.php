@@ -8,9 +8,14 @@
 
 namespace Krtv\Bundle\CsrfValidatorBundle\ReaderManager;
 
+use Krtv\Bundle\CsrfValidatorBundle\Annotations\Csrf;
 
 use Doctrine\Common\Annotations\Reader;
-use Krtv\Bundle\CsrfValidatorBundle\Annotations\Csrf;
+use Doctrine\Common\Annotations\Annotation;
+use Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfTokenManagerAdapter;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * Class AnnotationReaderManager
@@ -24,15 +29,71 @@ class AnnotationReaderManager
     protected $reader;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
+     * @var
+     */
+    protected $csrfManager;
+
+    /**
      * @var string
      */
     protected $annotationClass = Csrf::class;
 
     /**
      * @param Reader $reader
+     * @param $csrfManager
+     * @throws \RuntimeException
      */
-    public function __construct(Reader $reader)
+    public function __construct(Reader $reader, $csrfManager)
     {
+        $this->csrfManager = $csrfManager;
         $this->reader = $reader;
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function setRequest(Request $request = null)
+    {
+        $this->request = $request;
+    }
+
+    /**
+     * @param \ReflectionMethod $action
+     * @return bool|Annotation
+     */
+    public function supports(\ReflectionMethod $action)
+    {
+        $annotation = $this->reader->getMethodAnnotation($action, $this->annotationClass);
+        if ($annotation !== null) {
+            return $annotation;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Annotation $annotation
+     * @throws \RuntimeException
+     * @return bool
+     */
+    public function validate(Annotation $annotation)
+    {
+        $token = $this->request->get($annotation->param);
+        $intention = $annotation->intention;
+
+        if ($this->csrfManager instanceof CsrfTokenManagerAdapter) {
+            return $this->csrfManager->isCsrfTokenValid($intention, $token);
+        } elseif ($this->csrfManager instanceof CsrfTokenManagerInterface) {
+            $tokenObject = new CsrfToken($annotation->intention, $token);
+
+            return $this->csrfManager->isTokenValid($tokenObject);
+        } else {
+            throw new \RuntimeException('Invalid CSRF token manager provided');
+        }
     }
 } 
