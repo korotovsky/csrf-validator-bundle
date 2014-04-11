@@ -6,7 +6,7 @@
 
 ## Features:
 
-- Add extra annotation for auto-validate CSRF-tokens in your controller actions
+- Add extra annotation for auto validation CSRF-tokens to your controller actions
 
 ## Installation and configuration:
 

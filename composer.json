@@ -2,9 +2,19 @@
     "name": "korotovsky/csrf-validator-bundle",
     "type": "symfony-bundle",
     "description": "Validate CSRF token via annotation",
-    "license": "BSD",
+    "keywords": ["csrf", "validation", "security"],
+    "homepage": "http://korotovsky.io",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Korotovsky",
+            "email": "dmitry@korotovsky.io"
+        }
+    ],
     "require": {
-        "php": ">=5.5"
+        "php": ">=5.4",
+        "doctrine/common": "~2.2",
+        "symfony/symfony": "2.4.*"
     },
     "autoload": {
         "psr-0": { "Krtv\\Bundle\\CsrfValidatorBundle": "src/" }
