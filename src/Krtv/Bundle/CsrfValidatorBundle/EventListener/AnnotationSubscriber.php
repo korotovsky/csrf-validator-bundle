@@ -1,12 +1,12 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: korotovsky
+ * User: Krtv
  * Date: 4/11/14
  * Time: 9:59 AM
  */
 
-namespace Korotovsky\Bundle\CsrfValidatorBundle\EventListener;
+namespace Krtv\Bundle\CsrfValidatorBundle\EventListener;
 
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Class AnnotationSubscriber
- * @package Korotovsky\Bundle\CsrfValidatorBundle\EventListener
+ * @package Krtv\Bundle\CsrfValidatorBundle\EventListener
  */
 class AnnotationSubscriber implements EventSubscriberInterface
 {

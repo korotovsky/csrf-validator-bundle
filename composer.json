@@ -7,6 +7,6 @@
         "php": ">=5.5"
     },
     "autoload": {
-        "psr-0": { "Korotovsky\\Bundle\\CsrfValidatorBundle": "" }
+        "psr-0": { "Krtv\\Bundle\\CsrfValidatorBundle": "src/" }
     }
 }

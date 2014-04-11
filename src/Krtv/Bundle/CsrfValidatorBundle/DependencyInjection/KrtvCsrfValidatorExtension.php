@@ -1,6 +1,6 @@
 <?php
 
-namespace Korotovsky\Bundle\CsrfValidatorBundle\DependencyInjection;
+namespace Krtv\Bundle\CsrfValidatorBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -8,10 +8,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 
 /**
- * Class KorotovskyCsrfValidatorExtension
- * @package Korotovsky\Bundle\CsrfValidatorBundle\DependencyInjection
+ * Class KrtvCsrfValidatorExtension
+ * @package Krtv\Bundle\CsrfValidatorBundle\DependencyInjection
  */
-class KorotovskyCsrfValidatorExtension extends Extension
+class KrtvCsrfValidatorExtension extends Extension
 {
     /**
      * Loads the Sms configuration.

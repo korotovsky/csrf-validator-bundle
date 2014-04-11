@@ -1,20 +1,20 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: korotovsky
+ * User: Krtv
  * Date: 4/11/14
  * Time: 9:55 AM
  */
 
-namespace Korotovsky\Bundle\CsrfValidatorBundle;
+namespace Krtv\Bundle\CsrfValidatorBundle\ReaderManager;
 
 
 use Doctrine\Common\Annotations\Reader;
-use Korotovsky\Bundle\CsrfValidatorBundle\Annotations\Csrf;
+use Krtv\Bundle\CsrfValidatorBundle\Annotations\Csrf;
 
 /**
  * Class AnnotationReaderManager
- * @package Korotovsky\Bundle\CsrfValidatorBundle
+ * @package Krtv\Bundle\CsrfValidatorBundle\ReaderManager
  */
 class AnnotationReaderManager
 {
