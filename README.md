@@ -15,7 +15,7 @@ Pretty simple with [Composer](http://packagist.org), add:
 ```json
 {
     "require": {
-        "korotovsky/csrf-validator-bundle": "~0.1.*"
+        "korotovsky/csrf-validator-bundle": "0.1.*"
     }
 }
 ```
