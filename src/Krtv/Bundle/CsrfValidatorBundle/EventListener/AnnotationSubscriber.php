@@ -1,16 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Krtv
- * Date: 4/11/14
- * Time: 9:59 AM
- */
 
 namespace Krtv\Bundle\CsrfValidatorBundle\EventListener;
 
 
 use Krtv\Bundle\CsrfValidatorBundle\ReaderManager\AnnotationReaderManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -25,14 +18,14 @@ class AnnotationSubscriber implements EventSubscriberInterface
     /**
      * @var AnnotationReaderManager
      */
-    protected $annotationManager;
+    private $annotationManager;
 
     /**
-     * @param ContainerInterface $container
+     * @param AnnotationReaderManager $annotationManager
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(AnnotationReaderManager $annotationManager)
     {
-        $this->annotationManager = $container->get('krtv.csrf_validator.reader_manager');
+        $this->annotationManager = $annotationManager;
     }
 
     /**

@@ -1,7 +1,7 @@
 # Intro to KrtvCsrfValidatorBundle
 
 - PHP `>=5.5`
-- KrtvCsrfValidatorBundle's master compatible with symfony (`>=2.3` versions).
+- KrtvCsrfValidatorBundle's master compatible with symfony (`>=2.5` versions).
 - Doctrine is required
 
 ## Features:
@@ -15,7 +15,17 @@ Pretty simple with [Composer](http://packagist.org), add:
 ```json
 {
     "require": {
-        "korotovsky/csrf-validator-bundle": "0.1.*"
+        "korotovsky/csrf-validator-bundle": "0.3.*"
+    }
+}
+```
+
+For latest version (UNSTABLE) use
+
+```json
+{
+    "require": {
+        "korotovsky/csrf-validator-bundle": "dev-master"
     }
 }
 ```

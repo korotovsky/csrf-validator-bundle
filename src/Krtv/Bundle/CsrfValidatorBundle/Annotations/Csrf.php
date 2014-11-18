@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Krtv
- * Date: 4/11/14
- * Time: 9:51 AM
- */
 
 namespace Krtv\Bundle\CsrfValidatorBundle\Annotations;
 
