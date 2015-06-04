@@ -1,14 +1,18 @@
 parameters:
     krtv.csrf_validator.subscriber.class: Krtv\Bundle\CsrfValidatorBundle\EventListener\AnnotationSubscriber
-    krtv.csrf_validator.reader_manager.class: Krtv\Bundle\CsrfValidatorBundle\ReaderManager\AnnotationReaderManager
+    krtv.csrf_validator.reader_manager.class: Krtv\Bundle\CsrfValidatorBundle\ReaderManager\ReaderManager
 
 services:
     krtv.csrf_validator.reader_manager:
         class: %krtv.csrf_validator.reader_manager.class%
-        arguments: [@annotation_reader, @security.csrf.token_manager, @request_stack]
+        arguments:
+            - @request_stack
+            - @security.csrf.token_manager
+            - @annotation_reader
 
     krtv.csrf_validator.subscriber:
         class: %krtv.csrf_validator.subscriber.class%
-        arguments: [@krtv.csrf_validator.reader_manager]
+        arguments:
+            - @krtv.csrf_validator.reader_manager
         tags:
             - { name: kernel.event_subscriber }

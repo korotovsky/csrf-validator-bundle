@@ -2,8 +2,8 @@
 
 namespace Krtv\Bundle\CsrfValidatorBundle\EventListener;
 
-
-use Krtv\Bundle\CsrfValidatorBundle\ReaderManager\AnnotationReaderManager;
+use Krtv\Bundle\CsrfValidatorBundle\ReaderManager\ReaderManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -16,16 +16,16 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class AnnotationSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var AnnotationReaderManager
+     * @var ReaderManagerInterface
      */
-    private $annotationManager;
+    protected $readerManager;
 
     /**
-     * @param AnnotationReaderManager $annotationManager
+     * @param ReaderManagerInterface $readerManager
      */
-    public function __construct(AnnotationReaderManager $annotationManager)
+    public function __construct(ReaderManagerInterface $readerManager)
     {
-        $this->annotationManager = $annotationManager;
+        $this->readerManager = $readerManager;
     }
 
     /**
@@ -65,8 +65,8 @@ class AnnotationSubscriber implements EventSubscriberInterface
 
         $method = new \ReflectionMethod($controller, $action);
 
-        if ($annotation = $this->annotationManager->supports($method)) {
-            if (!$this->annotationManager->validate($annotation)) {
+        if ($annotation = $this->readerManager->supports($method)) {
+            if (!$this->readerManager->validate($annotation)) {
                 throw new BadRequestHttpException('Token is invalid');
             }
         }
