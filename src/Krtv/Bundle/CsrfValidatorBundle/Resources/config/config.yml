@@ -4,15 +4,15 @@ parameters:
 
 services:
     krtv.csrf_validator.reader_manager:
-        class: %krtv.csrf_validator.reader_manager.class%
+        class: "%krtv.csrf_validator.reader_manager.class%"
         arguments:
-            - @request_stack
-            - @security.csrf.token_manager
-            - @annotation_reader
+            - "@request_stack"
+            - "@security.csrf.token_manager"
+            - "@annotation_reader"
 
     krtv.csrf_validator.subscriber:
-        class: %krtv.csrf_validator.subscriber.class%
+        class: "%krtv.csrf_validator.subscriber.class%"
         arguments:
-            - @krtv.csrf_validator.reader_manager
+            - "@krtv.csrf_validator.reader_manager"
         tags:
             - { name: kernel.event_subscriber }
